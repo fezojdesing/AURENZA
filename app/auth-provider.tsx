@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
+import { createContext, useContext, useEffect, useState, type ReactNode, type FormEvent } from "react";
 import type { Session } from "@supabase/supabase-js";
 import { getSupabaseClient } from "../lib/supabase";
 
@@ -25,7 +25,7 @@ function AuthScreen() {
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
 
-  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setError("");
     setNotice("");
