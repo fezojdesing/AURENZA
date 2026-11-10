@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useAuth } from "./auth-provider";
 import {
   Bell, CalendarDays, CheckSquare, ChevronRight, ClipboardList,
   FileText, GraduationCap, LayoutDashboard, Menu, NotebookPen,
@@ -25,6 +26,7 @@ const tasks = [
 ];
 
 export default function Home() {
+  const { email, signOut } = useAuth();
   const [active, setActive] = useState("Inicio");
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -47,8 +49,8 @@ export default function Home() {
         <div className="sidebar-bottom">
           <button className="nav-item"><Settings size={18}/><span>Configuración</span></button>
           <div className="profile">
-            <div className="avatar">A</div>
-            <div><strong>Mi espacio</strong><small>Cuenta personal</small></div>
+            <div className="avatar">{email?.charAt(0).toUpperCase() ?? "A"}</div>
+            <div className="profile-details"><strong>Mi espacio</strong><small>{email ?? "Cuenta personal"}</small></div>
           </div>
         </div>
       </aside>
@@ -62,7 +64,7 @@ export default function Home() {
           <div className="top-actions">
             <button className="search-button"><Search size={17}/><span>Buscar en AURENZA</span><kbd>⌘ K</kbd></button>
             <button className="icon-button" aria-label="Notificaciones"><Bell size={19}/><i/></button>
-            <div className="avatar avatar-top">A</div>
+            <button className="signout-button" onClick={() => void signOut()}>Cerrar sesión</button><div className="avatar avatar-top">{email?.charAt(0).toUpperCase() ?? "A"}</div>
           </div>
         </header>
 
