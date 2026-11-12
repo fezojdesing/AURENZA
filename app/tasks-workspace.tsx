@@ -16,7 +16,8 @@ type Activity = {
   created_at: string | null;
 };
 
-type ChecklistItem = { id: string; activity_id: string; title: string; completed: boolean | null; position: number | null };\ntype Status = "pending" | "in_progress" | "completed";
+type ChecklistItem = { id: string; activity_id: string; title: string; completed: boolean | null; position: number | null };
+type Status = "pending" | "in_progress" | "completed";
 const statusLabels: Record<Status, string> = {
   pending: "Pendiente",
   in_progress: "En progreso",
