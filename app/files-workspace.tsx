@@ -48,9 +48,9 @@ export default function FilesWorkspace(){
         const {error:uploadError}=await supabase.storage.from(bucket).upload(path,file,{upsert:false,contentType:file.type||"application/octet-stream"});
         if(uploadError)failed.push(file.name+" ("+uploadError.message+")");
       }
+      await loadFiles();
       if(failed.length)setError("No se pudieron subir: "+failed.join(", "));
       else setNotice(selected.length===1?"Archivo subido correctamente.":"Archivos subidos correctamente.");
-      await loadFiles();
     }catch(caught){setError(caught instanceof Error?caught.message:"No pudimos subir los archivos.");}
     finally{setUploading(false);}
   }
