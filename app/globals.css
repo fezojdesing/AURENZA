@@ -97,3 +97,47 @@ html,body{background:#F5F6F7;color:var(--ink)}
 @media(max-width:850px){.courses-layout{grid-template-columns:1fr}}
 @media(max-width:720px){.sidebar{background:#fff}.brand{border-bottom-color:#E8EBEE}.workspace-label{color:#8994A0}.nav-item{color:#657386}.nav-item.active{background:#EDF1F5;color:var(--navy)}.courses-layout{gap:13px}.course-empty{min-height:180px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+
+
+/* AURENZA · Mis tareas */
+.tasks-layout{display:grid;grid-template-columns:minmax(285px,.82fr) minmax(0,1.18fr);gap:18px;align-items:start}
+.task-form{display:grid;gap:9px;margin-top:22px}
+.task-form label{font-size:11px;font-weight:600;color:#40546A;margin-top:6px}
+.task-form label span{font-weight:400;color:#8B96A2}
+.task-form input,.task-form textarea,.task-form select,.activity-actions select{width:100%;min-width:0;border:1px solid #E2E7EB;border-radius:10px;padding:11px 12px;font:inherit;font-size:11px;color:var(--ink);background:#FBFCFD;outline:none}
+.task-form input:focus,.task-form textarea:focus,.task-form select:focus,.activity-actions select:focus{border-color:#91A4B7;box-shadow:0 0 0 3px #DCE5EE80}
+.task-form textarea{resize:vertical;line-height:1.5}
+.task-form-actions{display:flex;gap:9px;align-items:center;margin-top:12px}
+.task-form-actions .primary-button{justify-content:center;min-height:42px;flex:1}
+.secondary-button{display:flex;align-items:center;justify-content:center;gap:6px;padding:10px 13px;border:1px solid #E2E7EB;border-radius:9px;background:#fff;color:#657386;font-size:11px}
+.secondary-button:hover{background:#F5F7F9}
+.task-filters{display:flex;gap:6px;flex-wrap:wrap;margin:18px 0 5px;padding-bottom:13px;border-bottom:1px solid #EDF0F2}
+.task-filter{border:1px solid transparent;background:transparent;border-radius:20px;padding:7px 9px;color:#7C8997;font-size:10px;display:flex;align-items:center;gap:6px}
+.task-filter span{font-size:9px;color:#98A3AD}
+.task-filter.active{background:#EDF1F5;border-color:#E3E9EF;color:#2D4967;font-weight:700}
+.task-filter.active span{color:#34516F}
+.activity-list{display:grid}
+.activity-card{padding:16px 1px;border-bottom:1px solid #EDF0F2}
+.activity-card:last-child{border-bottom:0}
+.activity-card-top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.activity-main{min-width:0}
+.activity-main>strong{font-size:12px;line-height:1.5;color:#263B52;display:block}
+.activity-meta{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
+.activity-meta>span{display:inline-flex;align-items:center;gap:5px;font-size:10px;color:#8994A0}
+.activity-course i{width:6px;height:6px;border-radius:50%;display:inline-block}
+.activity-status{font-size:9px;white-space:nowrap;border-radius:20px;padding:5px 8px}
+.activity-status.status-pending{background:#F2F3F4;color:#778493}
+.activity-status.status-in_progress{background:#EDF2F7;color:#54718C}
+.activity-status.status-completed{background:#EDF5F0;color:#5C806D}
+.activity-description{font-size:10px;color:#788695;line-height:1.65;margin-top:11px;white-space:pre-wrap}
+.activity-rubric{margin-top:9px;font-size:10px;color:#718092}
+.activity-rubric summary{cursor:pointer;font-weight:600;color:#45617E}
+.activity-rubric p{white-space:pre-wrap;line-height:1.6;margin-top:7px}
+.activity-actions{display:flex;align-items:center;gap:7px;margin-top:13px}
+.status-select-label{font-size:9px;color:#8A96A2}
+.activity-actions select{width:auto;max-width:145px;padding:7px 8px;font-size:10px;margin-right:auto}
+.activity-icon-button{width:30px;height:30px;border:1px solid #E6EAED;border-radius:9px;background:#FFFFFFB8;color:#7E8B99;display:grid;place-items:center}
+.activity-icon-button:hover{background:#EDF2F6;color:#34516F;border-color:#D7E0E8}
+.activity-icon-button.danger:hover{background:#FFF1EF;color:#A94F47;border-color:#F1D8D4}
+@media(max-width:850px){.tasks-layout{grid-template-columns:1fr}}
+@media(max-width:720px){.tasks-layout{gap:13px}.task-filters{gap:3px}.task-filter{font-size:9px;padding:7px}.activity-card-top{gap:6px}.activity-main>strong{font-size:11px}.activity-actions{gap:5px}.status-select-label{display:none}.activity-actions select{max-width:138px}}
