@@ -55,7 +55,7 @@ export default function CoursesWorkspace() {
   }
 
   async function deleteCourse(id: string) {
-    if (!window.confirm("¿Eliminar esta materia? Las actividades vinculadas quedarán sin materia asignada.")) return;
+    if (!window.confirm("¿Eliminar esta materia? Las actividades y calificaciones vinculadas se conservarán, pero quedarán sin materia asignada.")) return;
     try {
       const { error: deleteError } = await getSupabaseClient().from("courses").delete().eq("id", id);
       if (deleteError) throw deleteError;
