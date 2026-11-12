@@ -62,20 +62,20 @@ export default function GradesWorkspace(){
     return {term,subjects,average:allComplete?completed.reduce((s,c)=>s+(c.finalGrade??0),0)/subjects.length:null,allComplete};
   }),[summaries]);
   const completedTerms=terms.filter(t=>t.allComplete&&t.average!==null);
-  const generalAverage=completedTerms.length===5?completedTerms.reduce((s,t)=>s+(t.average??0),0)/5:null;
+  const generalAverage=completedTerms.length>0?completedTerms.reduce((s,t)=>s+(t.average??0),0)/completedTerms.length:null;
   const unassigned=summaries.filter(s=>s.term===null).length;
 
   return <div className="grades-workspace">
     <div className="welcome-row"><div><div className="eyebrow"><Award size={14}/> TU ESFUERZO TAMBIÉN CUENTA</div><h1>Calificaciones<span className="orange-period">.</span></h1><p className="intro">Controla las ponderaciones, el promedio de cada materia y tu avance en los cinco cuatrimestres.</p></div></div>
     <div className="grade-summary-grid">
-      <article className="stat-card"><div className="stat-top"><span>Promedio general</span><span className="stat-icon navy-soft"><Award size={17}/></span></div><strong>{generalAverage===null?"—":(generalAverage*10).toFixed(1)}</strong><small>{generalAverage===null?completedTerms.length+" de 5 cuatrimestres completos":"Escala de 0 a 10 · "+(generalAverage*10).toFixed(1)+"/10"}</small></article>
+      <article className="stat-card"><div className="stat-top"><span>{completedTerms.length===5?"Promedio general final":"Promedio acumulado"}</span><span className="stat-icon navy-soft"><Award size={17}/></span></div><strong>{generalAverage===null?"—":(generalAverage*10).toFixed(1)}</strong><small>{generalAverage===null?"Completa tu primer cuatrimestre":completedTerms.length===5?"Los cinco cuatrimestres · "+(generalAverage*10).toFixed(1)+"/10":"Provisional · promedio de "+completedTerms.length+" de 5 cuatrimestres completos"}</small></article>
       <article className="stat-card"><div className="stat-top"><span>Evaluaciones</span><span className="stat-icon orange-soft"><Pencil size={17}/></span></div><strong>{String(grades.length).padStart(2,"0")}</strong><small>Registros guardados</small></article>
       <article className="stat-card"><div className="stat-top"><span>Materias asignadas</span><span className="stat-icon blue-soft"><GraduationCap size={17}/></span></div><strong>{summaries.filter(s=>s.term!==null).length}</strong><small>{unassigned?unassigned+" sin cuatrimestre":"De "+courses.length+" materias"}</small></article>
     </div>
     <section className="panel" style={{marginBottom:22}}>
       <div className="panel-heading"><div><h2>Tu avance académico</h2><p>Promedio por cuatrimestre y resultado acumulado.</p></div><span className="course-count">{completedTerms.length}/05</span></div>
       <div className="grade-summary-grid">{terms.map(t=><article className="stat-card" key={t.term}><div className="stat-top"><span>{["Primer","Segundo","Tercer","Cuarto","Quinto"][t.term-1]} cuatrimestre</span><span className="stat-icon navy-soft">{t.allComplete?"✓":t.subjects.length?String(t.subjects.length):"—"}</span></div><strong>{t.average===null?"—":(t.average*10).toFixed(1)}</strong><small>{t.subjects.length===0?"Sin materias asignadas":t.allComplete?t.subjects.length+" materias · completo":t.subjects.length+" materias · "+t.subjects.filter(s=>s.complete).length+" con ponderación completa"}</small></article>)}</div>
-      <p className="intro" style={{marginTop:12,fontSize:13}}>El promedio general se mostrará cuando los cinco cuatrimestres tengan materias asignadas y todas sus ponderaciones sumen 100%.</p>
+      <p className="intro" style={{marginTop:12,fontSize:13}}>Tu promedio acumulado se actualiza al completar cada cuatrimestre. Al terminar los cinco, se convertirá en tu promedio general final.</p>
     </section>
     <div className="grades-layout">
       <section className="panel grade-form-panel">
