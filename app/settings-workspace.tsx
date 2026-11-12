@@ -13,13 +13,14 @@ export default function SettingsWorkspace(){
   const [notice,setNotice]=useState("");
   const [loaded,setLoaded]=useState(false);
 
-  async function loadAccount(){
-    if(loaded)return;
-    const {data:{user},error:userError}=await getSupabaseClient().auth.getUser();
-    if(userError){setError(userError.message);return;}
-    setEmail(user?.email??"");setLoaded(true);
-  }
-  void loadAccount();
+  useEffect(()=>{
+    async function loadAccount(){
+      const {data:{user},error:userError}=await getSupabaseClient().auth.getUser();
+      if(userError){setError(userError.message);return;}
+      setEmail(user?.email??"");setLoaded(true);
+    }
+    void loadAccount();
+  },[]);
 
   async function updatePassword(event:FormEvent<HTMLFormElement>){
     event.preventDefault();setError("");setNotice("");
