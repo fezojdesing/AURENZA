@@ -56,7 +56,7 @@ export default function Home() {
           ))}
         </nav>
         <div className="sidebar-bottom">
-          <button className={`nav-item ${active === "Configuración" ? "active" : ""}`} onClick={() => setActive("Configuración")}><Settings size={18}/><span>Configuración</span></button>
+          <button className={`nav-item ${active === "Configuración" ? "active" : ""}`} onClick={() => { setActive("Configuración"); setMenuOpen(false); }}><Settings size={18}/><span>Configuración</span></button>
           <div className="profile">
             <div className="avatar">{email?.charAt(0).toUpperCase() ?? "A"}</div>
             <div className="profile-details"><strong>Mi espacio</strong><small>{email ?? "Cuenta personal"}</small></div>
