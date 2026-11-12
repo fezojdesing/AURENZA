@@ -71,8 +71,10 @@ export default function TasksWorkspace() {
       ]);
       if (activityResult.error) throw activityResult.error;
       if (courseResult.error) throw courseResult.error;
+      if (checklistResult.error) throw checklistResult.error;
       setActivities(activityResult.data ?? []);
       setCourses(courseResult.data ?? []);
+      setChecklistItems(checklistResult.data ?? []);
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : "No pudimos cargar tus actividades.");
     } finally {
