@@ -242,3 +242,20 @@ html,body{background:#F5F6F7;color:var(--ink)}
 .agenda-footer{display:flex;align-items:center;justify-content:space-between;margin-top:17px;padding-top:13px;border-top:1px solid #EDF0F2;color:#929DA8;font-size:9px}
 @media(max-width:850px){.calendar-layout{grid-template-columns:1fr}}
 @media(max-width:720px){.calendar-layout{gap:13px}.calendar-month-panel,.calendar-agenda-panel{padding:16px}.calendar-cell{height:49px;border-radius:8px;font-size:11px}.calendar-grid{gap:3px}.calendar-month-header h2{font-size:18px}}
+
+
+/* AURENZA · Listas de pasos por actividad */
+.activity-checklist{margin-top:13px;padding:11px 12px;background:#F8FAFB;border:1px solid #EDF0F2;border-radius:10px}
+.activity-checklist-heading{display:flex;align-items:center;gap:7px;color:#65798E;font-size:9px;font-weight:700}
+.activity-checklist-heading span{margin-left:auto;color:#8994A0;font-weight:500}
+.checklist-row{display:flex;align-items:center;gap:8px;padding:7px 0 0}
+.checklist-toggle{width:17px;height:17px;border:1px solid #CBD5DE;border-radius:5px;background:#fff;color:transparent;display:grid;place-items:center;flex-shrink:0;padding:0}
+.checklist-toggle.checked{background:#34516F;border-color:#34516F;color:#fff}
+.checklist-title{font-size:10px;color:#66788B;flex:1;min-width:0}
+.checklist-title.completed{text-decoration:line-through;color:#A2ABB4}
+.checklist-remove{border:0;background:transparent;color:#A0AAB3;padding:3px;display:grid;place-items:center}
+.checklist-remove:hover{color:#A94F47}
+.checklist-add{display:flex;gap:6px;margin-top:8px;padding-top:8px;border-top:1px solid #E9EDF0}
+.checklist-add input{min-width:0;flex:1;border:0;background:transparent;font:inherit;font-size:10px;color:#3A5067;outline:none}
+.checklist-add button{width:25px;height:25px;border:1px solid #E1E7EC;border-radius:7px;background:#fff;color:#526F8C;display:grid;place-items:center}
+.checklist-add button:disabled{opacity:.4}
