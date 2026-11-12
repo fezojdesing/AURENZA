@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import { LockKeyhole, Mail, ShieldCheck } from "lucide-react";
 import { getSupabaseClient } from "../lib/supabase";
 
