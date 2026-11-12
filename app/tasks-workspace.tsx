@@ -16,7 +16,7 @@ type Activity = {
   created_at: string | null;
 };
 
-type Status = "pending" | "in_progress" | "completed";
+type ChecklistItem = { id: string; activity_id: string; title: string; completed: boolean | null; position: number | null };\ntype Status = "pending" | "in_progress" | "completed";
 const statusLabels: Record<Status, string> = {
   pending: "Pendiente",
   in_progress: "En progreso",
@@ -39,7 +39,7 @@ function formatDueDate(value: string | null) {
 }
 
 export default function TasksWorkspace() {
-  const [activities, setActivities] = useState<Activity[]>([]);
+  const [activities, setActivities] = useState<Activity[]>([]);\n  const [checklistItems, setChecklistItems] = useState<ChecklistItem[]>([]);\n  const [checklistDrafts, setChecklistDrafts] = useState<Record<string,string>>({});
   const [courses, setCourses] = useState<Course[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -61,9 +61,9 @@ export default function TasksWorkspace() {
       const { data: { user }, error: userError } = await supabase.auth.getUser();
       if (userError) throw userError;
       if (!user) throw new Error("Tu sesión ha expirado. Inicia sesión nuevamente.");
-      const [activityResult, courseResult] = await Promise.all([
+      const [activityResult, courseResult, checklistResult] = await Promise.all([
         supabase.from("activities").select("id,course_id,title,instructions,rubric,due_date,status,created_at").eq("user_id", user.id).order("due_date", { ascending: true, nullsFirst: false }),
-        supabase.from("courses").select("id,name,color").eq("user_id", user.id).order("name", { ascending: true }),
+        supabase.from("courses").select("id,name,color").eq("user_id", user.id).order("name", { ascending: true }),\n        supabase.from("checklist_items").select("id,activity_id,title,completed,position").eq("user_id", user.id).order("position", { ascending: true }),
       ]);
       if (activityResult.error) throw activityResult.error;
       if (courseResult.error) throw courseResult.error;
@@ -134,6 +134,40 @@ export default function TasksWorkspace() {
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : "No pudimos actualizar el estado.");
     }
+  }
+
+  async function addChecklistItem(activityId: string) {
+    const itemTitle = (checklistDrafts[activityId] ?? "").trim();
+    if (!itemTitle) return;
+    setError("");
+    try {
+      const supabase = getSupabaseClient();
+      const { data: { user }, error: userError } = await supabase.auth.getUser();
+      if (userError) throw userError;
+      if (!user) throw new Error("Inicia sesión para guardar un punto de la lista.");
+      const position = checklistItems.filter(item => item.activity_id === activityId).length;
+      const { data, error: insertError } = await supabase.from("checklist_items").insert({ user_id: user.id, activity_id: activityId, title: itemTitle, position }).select("id,activity_id,title,completed,position").single();
+      if (insertError) throw insertError;
+      setChecklistItems(current => [...current, data]);
+      setChecklistDrafts(current => ({ ...current, [activityId]: "" }));
+    } catch (caught) { setError(caught instanceof Error ? caught.message : "No pudimos guardar el punto de la lista."); }
+  }
+
+  async function toggleChecklistItem(item: ChecklistItem) {
+    const nextCompleted = !item.completed;
+    try {
+      const { error: updateError } = await getSupabaseClient().from("checklist_items").update({ completed: nextCompleted }).eq("id", item.id);
+      if (updateError) throw updateError;
+      setChecklistItems(current => current.map(entry => entry.id === item.id ? { ...entry, completed: nextCompleted } : entry));
+    } catch (caught) { setError(caught instanceof Error ? caught.message : "No pudimos actualizar la lista."); }
+  }
+
+  async function removeChecklistItem(id: string) {
+    try {
+      const { error: deleteError } = await getSupabaseClient().from("checklist_items").delete().eq("id", id);
+      if (deleteError) throw deleteError;
+      setChecklistItems(current => current.filter(entry => entry.id !== id));
+    } catch (caught) { setError(caught instanceof Error ? caught.message : "No pudimos eliminar el punto de la lista."); }
   }
 
   async function deleteActivity(id: string) {
@@ -212,6 +246,15 @@ export default function TasksWorkspace() {
               </div>
               {activity.instructions && <p className="activity-description">{activity.instructions}</p>}
               {activity.rubric && <details className="activity-rubric"><summary>Ver rúbrica o criterios</summary><p>{activity.rubric}</p></details>}
+              <div className="activity-checklist">
+                <div className="activity-checklist-heading"><CheckSquare size={13}/> Lista de pasos <span>{checklistItems.filter(item => item.activity_id === activity.id && item.completed).length}/{checklistItems.filter(item => item.activity_id === activity.id).length}</span></div>
+                {checklistItems.filter(item => item.activity_id === activity.id).map(item => <div className="checklist-row" key={item.id}>
+                  <button type="button" className={item.completed ? "checklist-toggle checked" : "checklist-toggle"} onClick={() => void toggleChecklistItem(item)} aria-label={item.completed ? "Marcar pendiente" : "Marcar completado"}><Check size={11}/></button>
+                  <span className={item.completed ? "checklist-title completed" : "checklist-title"}>{item.title}</span>
+                  <button type="button" className="checklist-remove" onClick={() => void removeChecklistItem(item.id)} aria-label="Eliminar paso"><X size={12}/></button>
+                </div>)}
+                <div className="checklist-add"><input value={checklistDrafts[activity.id] ?? ""} onChange={event => setChecklistDrafts(current => ({ ...current, [activity.id]: event.target.value }))} placeholder="Agregar un paso..." aria-label="Nuevo paso de la lista" onKeyDown={event => { if (event.key === "Enter") { event.preventDefault(); void addChecklistItem(activity.id); } }}/><button type="button" onClick={() => void addChecklistItem(activity.id)} disabled={!(checklistDrafts[activity.id] ?? "").trim()} aria-label="Agregar paso"><Plus size={14}/></button></div>
+              </div>
               <div className="activity-actions">
                 <label className="status-select-label" htmlFor={"status-" + activity.id}>Estado</label>
                 <select id={"status-" + activity.id} value={currentStatus} onChange={event => void changeStatus(activity, event.target.value as Status)}>
