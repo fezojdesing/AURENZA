@@ -8,6 +8,8 @@ import NotesWorkspace from "./notes-workspace";
 import GradesWorkspace from "./grades-workspace";
 import CalendarWorkspace from "./calendar-workspace";
 import FilesWorkspace from "./files-workspace";
+import SettingsWorkspace from "./settings-workspace";
+import BlackboardWorkspace from "./blackboard-workspace";
 import {
   Bell, CalendarDays, CheckSquare, ChevronRight, ClipboardList,
   FileText, GraduationCap, LayoutDashboard, Menu, NotebookPen,
@@ -53,7 +55,7 @@ export default function Home() {
           ))}
         </nav>
         <div className="sidebar-bottom">
-          <button className="nav-item"><Settings size={18}/><span>Configuración</span></button>
+          <button className={`nav-item ${active === "Configuración" ? "active" : ""}`} onClick={() => setActive("Configuración")}><Settings size={18}/><span>Configuración</span></button>
           <div className="profile">
             <div className="avatar">{email?.charAt(0).toUpperCase() ?? "A"}</div>
             <div className="profile-details"><strong>Mi espacio</strong><small>{email ?? "Cuenta personal"}</small></div>
