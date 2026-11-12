@@ -6,6 +6,10 @@ import { getSupabaseClient } from "../lib/supabase";
 
 type Course={id:string;name:string;color:string|null};
 type Grade={id:string;course_id:string|null;title:string;grade:number;weight:number|null;graded_at:string|null};
+function localDateInput(){
+  const now=new Date();
+  return [now.getFullYear(),String(now.getMonth()+1).padStart(2,"0"),String(now.getDate()).padStart(2,"0")].join("-");
+}
 
 export default function GradesWorkspace(){
   const [courses,setCourses]=useState<Course[]>([]);
@@ -18,7 +22,7 @@ export default function GradesWorkspace(){
   const [courseId,setCourseId]=useState("");
   const [grade,setGrade]=useState("10");
   const [weight,setWeight]=useState("");
-  const [gradedAt,setGradedAt]=useState(new Date().toISOString().slice(0,10));
+  const [gradedAt,setGradedAt]=useState(localDateInput);
 
   async function loadData(){
     setLoading(true);setError("");
@@ -39,7 +43,7 @@ export default function GradesWorkspace(){
   }
   useEffect(()=>{void loadData();},[]);
 
-  function resetForm(){setEditingId(null);setTitle("");setCourseId("");setGrade("10");setWeight("");setGradedAt(new Date().toISOString().slice(0,10));}
+  function resetForm(){setEditingId(null);setTitle("");setCourseId("");setGrade("10");setWeight("");setGradedAt(localDateInput());}
   function editItem(item:Grade){setEditingId(item.id);setTitle(item.title);setCourseId(item.course_id??"");setGrade(String(item.grade));setWeight(item.weight===null?"":String(item.weight));setGradedAt(item.graded_at??"");window.scrollTo({top:0,behavior:"smooth"});}
 
   async function saveGrade(event:FormEvent<HTMLFormElement>){
