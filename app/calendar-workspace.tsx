@@ -61,7 +61,13 @@ export default function CalendarWorkspace(){
     return new Intl.DateTimeFormat("es-MX",{weekday:"long",day:"numeric",month:"long",year:"numeric"}).format(new Date(year,monthNum-1,day));
   },[selectedDate]);
 
-  function moveMonth(amount:number){setMonth(current=>new Date(current.getFullYear(),current.getMonth()+amount,1));}
+  function moveMonth(amount:number){
+    const next=new Date(month.getFullYear(),month.getMonth()+amount,1);
+    const selectedDay=Number(selectedDate.split("-")[2]??1);
+    const lastDay=new Date(next.getFullYear(),next.getMonth()+1,0).getDate();
+    setMonth(next);
+    setSelectedDate(keyForDate(new Date(next.getFullYear(),next.getMonth(),Math.min(selectedDay,lastDay))));
+  }
 
   return <div className="calendar-workspace">
     <div className="welcome-row"><div><div className="eyebrow"><CalendarDays size={14}/> TUS FECHAS, EN PERSPECTIVA</div><h1>Calendario<span className="orange-period">.</span></h1><p className="intro">Visualiza tus entregas y organiza mejor tu tiempo.</p></div></div>
