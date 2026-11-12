@@ -4,7 +4,7 @@ import { useEffect, useState, type FormEvent } from "react";
 import { GraduationCap, Plus, X } from "lucide-react";
 import { getSupabaseClient } from "../lib/supabase";
 
-type Course = { id: string; name: string; description: string | null; color: string | null };
+type Course = { id: string; name: string; description: string | null; color: string | null; term: number | null };
 
 export default function CoursesWorkspace() {
   const [courses, setCourses] = useState<Course[]>([]);
@@ -13,7 +13,7 @@ export default function CoursesWorkspace() {
   const [error, setError] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [color, setColor] = useState("#27496D");
+  const [color, setColor] = useState("#27496D");\n  const [term, setTerm] = useState("");
 
   async function loadCourses() {
     setLoading(true);
@@ -24,7 +24,7 @@ export default function CoursesWorkspace() {
       if (userError) throw userError;
       if (!user) throw new Error("Tu sesión ha expirado. Inicia sesión nuevamente.");
       const { data, error: queryError } = await supabase.from("courses")
-        .select("id, name, description, color").eq("user_id", user.id).order("created_at", { ascending: false });
+        .select("id, name, description, color, term").eq("user_id", user.id).order("created_at", { ascending: false });
       if (queryError) throw queryError;
       setCourses(data ?? []);
     } catch (caught) {
@@ -44,10 +44,10 @@ export default function CoursesWorkspace() {
       if (userError) throw userError;
       if (!user) throw new Error("Inicia sesión para guardar una materia.");
       const { error: insertError } = await supabase.from("courses").insert({
-        user_id: user.id, name: name.trim(), description: description.trim() || null, color
+        user_id: user.id, name: name.trim(), description: description.trim() || null, color, term: term ? Number(term) : null
       });
       if (insertError) throw insertError;
-      setName(""); setDescription(""); setColor("#27496D");
+      setName(""); setDescription(""); setColor("#27496D"); setTerm("");
       await loadCourses();
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : "No pudimos guardar la materia.");
@@ -73,7 +73,7 @@ export default function CoursesWorkspace() {
         <form className="course-form" onSubmit={createCourse}>
           <label htmlFor="course-name">Nombre de la materia</label>
           <input id="course-name" value={name} onChange={event => setName(event.target.value)} placeholder="Ej. Administración financiera" required maxLength={100}/>
-          <label htmlFor="course-description">Descripción <span>(opcional)</span></label>
+          <label htmlFor="course-term">Cuatrimestre</label>\n          <select id="course-term" value={term} onChange={event => setTerm(event.target.value)}><option value="">Por asignar</option>{[1,2,3,4,5].map(value => <option key={value} value={value}>{["Primer","Segundo","Tercer","Cuarto","Quinto"][value-1]} cuatrimestre</option>)}</select>\n          <label htmlFor="course-description">Descripción <span>(opcional)</span></label>
           <textarea id="course-description" value={description} onChange={event => setDescription(event.target.value)} placeholder="Agrega una breve descripción" rows={3}/>
           <label htmlFor="course-color">Color identificador</label>
           <div className="color-control"><input id="course-color" type="color" value={color} onChange={event => setColor(event.target.value)}/><span>{color.toUpperCase()}</span></div>
@@ -83,7 +83,7 @@ export default function CoursesWorkspace() {
       </section>
       <section className="panel course-list-panel">
         <div className="panel-heading"><div><h2>Tus materias</h2><p>{courses.length} {courses.length === 1 ? "materia registrada" : "materias registradas"}</p></div><span className="course-count">{courses.length.toString().padStart(2,"0")}</span></div>
-        {loading ? <div className="course-empty">Cargando tus materias...</div> : courses.length === 0 ? <div className="course-empty"><span className="empty-icon"><GraduationCap size={23}/></span><strong>Aún no tienes materias</strong><span>Agrega tu primera materia para comenzar a organizar tus actividades.</span></div> : <div className="course-list">{courses.map(course => <article className="course-item" key={course.id}><span className="course-swatch" style={{backgroundColor:course.color || "#27496D"}}/><div className="course-item-copy"><strong>{course.name}</strong><small>{course.description || "Sin descripción"}</small></div><button className="delete-course" type="button" onClick={() => void deleteCourse(course.id)} aria-label={`Eliminar ${course.name}`} title="Eliminar materia"><X size={16}/></button></article>)}</div>}
+        {loading ? <div className="course-empty">Cargando tus materias...</div> : courses.length === 0 ? <div className="course-empty"><span className="empty-icon"><GraduationCap size={23}/></span><strong>Aún no tienes materias</strong><span>Agrega tu primera materia para comenzar a organizar tus actividades.</span></div> : <div className="course-list">{courses.map(course => <article className="course-item" key={course.id}><span className="course-swatch" style={{backgroundColor:course.color || "#27496D"}}/><div className="course-item-copy"><strong>{course.name}</strong><small>{course.description || "Sin descripción"} · {course.term ? ["","Primer","Segundo","Tercer","Cuarto","Quinto"][course.term] + " cuatrimestre" : "Sin cuatrimestre"}</small><select aria-label={"Cuatrimestre de "+course.name} value={course.term ?? ""} onChange={async event => { const value=event.target.value; const {error:updateError}=await getSupabaseClient().from("courses").update({term:value?Number(value):null}).eq("id",course.id); if(updateError){setError(updateError.message);return;} setCourses(current=>current.map(item=>item.id===course.id?{...item,term:value?Number(value):null}:item)); }}><option value="">Asignar cuatrimestre</option>{[1,2,3,4,5].map(value=><option key={value} value={value}>{["Primer","Segundo","Tercer","Cuarto","Quinto"][value-1]}</option>)}</select></div><button className="delete-course" type="button" onClick={() => void deleteCourse(course.id)} aria-label={`Eliminar ${course.name}`} title="Eliminar materia"><X size={16}/></button></article>)}</div>}
       </section>
     </div>
   </div>;
