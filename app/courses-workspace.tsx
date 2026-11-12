@@ -13,7 +13,8 @@ export default function CoursesWorkspace() {
   const [error, setError] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [color, setColor] = useState("#27496D");\n  const [term, setTerm] = useState("");
+  const [color, setColor] = useState("#27496D");
+  const [term, setTerm] = useState("");
 
   async function loadCourses() {
     setLoading(true);
@@ -73,7 +74,9 @@ export default function CoursesWorkspace() {
         <form className="course-form" onSubmit={createCourse}>
           <label htmlFor="course-name">Nombre de la materia</label>
           <input id="course-name" value={name} onChange={event => setName(event.target.value)} placeholder="Ej. Administración financiera" required maxLength={100}/>
-          <label htmlFor="course-term">Cuatrimestre</label>\n          <select id="course-term" value={term} onChange={event => setTerm(event.target.value)}><option value="">Por asignar</option>{[1,2,3,4,5].map(value => <option key={value} value={value}>{["Primer","Segundo","Tercer","Cuarto","Quinto"][value-1]} cuatrimestre</option>)}</select>\n          <label htmlFor="course-description">Descripción <span>(opcional)</span></label>
+          <label htmlFor="course-term">Cuatrimestre</label>
+          <select id="course-term" value={term} onChange={event => setTerm(event.target.value)}><option value="">Por asignar</option>{[1,2,3,4,5].map(value => <option key={value} value={value}>{["Primer","Segundo","Tercer","Cuarto","Quinto"][value-1]} cuatrimestre</option>)}</select>
+          <label htmlFor="course-description">Descripción <span>(opcional)</span></label>
           <textarea id="course-description" value={description} onChange={event => setDescription(event.target.value)} placeholder="Agrega una breve descripción" rows={3}/>
           <label htmlFor="course-color">Color identificador</label>
           <div className="color-control"><input id="course-color" type="color" value={color} onChange={event => setColor(event.target.value)}/><span>{color.toUpperCase()}</span></div>
