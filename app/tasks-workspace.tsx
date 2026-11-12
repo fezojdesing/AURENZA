@@ -40,7 +40,9 @@ function formatDueDate(value: string | null) {
 }
 
 export default function TasksWorkspace() {
-  const [activities, setActivities] = useState<Activity[]>([]);\n  const [checklistItems, setChecklistItems] = useState<ChecklistItem[]>([]);\n  const [checklistDrafts, setChecklistDrafts] = useState<Record<string,string>>({});
+  const [activities, setActivities] = useState<Activity[]>([]);
+  const [checklistItems, setChecklistItems] = useState<ChecklistItem[]>([]);
+  const [checklistDrafts, setChecklistDrafts] = useState<Record<string,string>>({});
   const [courses, setCourses] = useState<Course[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -64,7 +66,8 @@ export default function TasksWorkspace() {
       if (!user) throw new Error("Tu sesión ha expirado. Inicia sesión nuevamente.");
       const [activityResult, courseResult, checklistResult] = await Promise.all([
         supabase.from("activities").select("id,course_id,title,instructions,rubric,due_date,status,created_at").eq("user_id", user.id).order("due_date", { ascending: true, nullsFirst: false }),
-        supabase.from("courses").select("id,name,color").eq("user_id", user.id).order("name", { ascending: true }),\n        supabase.from("checklist_items").select("id,activity_id,title,completed,position").eq("user_id", user.id).order("position", { ascending: true }),
+        supabase.from("courses").select("id,name,color").eq("user_id", user.id).order("name", { ascending: true }),
+        supabase.from("checklist_items").select("id,activity_id,title,completed,position").eq("user_id", user.id).order("position", { ascending: true }),
       ]);
       if (activityResult.error) throw activityResult.error;
       if (courseResult.error) throw courseResult.error;
