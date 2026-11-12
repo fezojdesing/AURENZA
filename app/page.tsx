@@ -5,6 +5,7 @@ import { useAuth } from "./auth-provider";
 import CoursesWorkspace from "./courses-workspace";
 import TasksWorkspace from "./tasks-workspace";
 import NotesWorkspace from "./notes-workspace";
+import GradesWorkspace from "./grades-workspace";
 import {
   Bell, CalendarDays, CheckSquare, ChevronRight, ClipboardList,
   FileText, GraduationCap, LayoutDashboard, Menu, NotebookPen,
