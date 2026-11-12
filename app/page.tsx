@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useAuth } from "./auth-provider";
 import CoursesWorkspace from "./courses-workspace";
 import TasksWorkspace from "./tasks-workspace";
+import NotesWorkspace from "./notes-workspace";
 import {
   Bell, CalendarDays, CheckSquare, ChevronRight, ClipboardList,
   FileText, GraduationCap, LayoutDashboard, Menu, NotebookPen,
@@ -70,7 +71,7 @@ export default function Home() {
           </div>
         </header>
 
-        <div className="content">{active === "Mis materias" ? <CoursesWorkspace /> : active === "Mis tareas" ? <TasksWorkspace /> : <>
+        <div className="content">{active === "Mis materias" ? <CoursesWorkspace /> : active === "Mis tareas" ? <TasksWorkspace /> : active === "Apuntes" ? <NotesWorkspace /> : <>
           <div className="welcome-row">
             <div>
               <div className="eyebrow"><Sparkles size={14}/> TU ESPACIO, A TU RITMO</div>
