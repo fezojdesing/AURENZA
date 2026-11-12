@@ -10,6 +10,7 @@ import CalendarWorkspace from "./calendar-workspace";
 import FilesWorkspace from "./files-workspace";
 import SettingsWorkspace from "./settings-workspace";
 import BlackboardWorkspace from "./blackboard-workspace";
+import DashboardWorkspace from "./dashboard-workspace";
 import {
   Bell, CalendarDays, CheckSquare, ChevronRight, ClipboardList,
   FileText, GraduationCap, LayoutDashboard, Menu, NotebookPen,
