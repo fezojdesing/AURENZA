@@ -42,3 +42,58 @@
 .profile-details{min-width:0;overflow:hidden}
 .profile-details small{max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 @media(max-width:720px){.auth-page{padding:22px 15px 58px}.auth-card{padding:32px 25px 25px;border-radius:15px}.auth-brand{margin-bottom:35px}.auth-card h1{font-size:26px}.auth-side-note{text-align:center;left:20px;right:20px;bottom:18px}.signout-button{font-size:9px;padding:7px 8px}.top-actions{gap:8px}}
+
+
+/* AURENZA refined neutral + subtle Liquid Glass */
+:root{--navy:#172B45;--blue:#34516F;--orange:#B58A62;--ivory:#F5F6F7;--ink:#263648;--muted:#7D8792;--line:#E5E8EB;--white:#fff}
+html,body{background:#F5F6F7;color:var(--ink)}
+.sidebar{background:#fff;color:var(--navy);border-right:1px solid #E7EAED;box-shadow:8px 0 28px #1a2e4406}
+.brand{border-bottom-color:#E8EBEE}
+.mark-navy{border-color:var(--navy)}
+.workspace-label{color:#8994A0}
+.nav-item{color:#657386}
+.nav-item:hover{background:#F1F4F7;color:var(--navy)}
+.nav-item.active{background:#EDF1F5;color:var(--navy)}
+.profile{border-top-color:#E8EBEE}
+.profile small{color:#8793A0}
+.brand-name{color:var(--navy)}
+.mobile-close{color:var(--navy)}
+.topbar{background:#FFFFFFE8;backdrop-filter:blur(18px) saturate(160%);-webkit-backdrop-filter:blur(18px) saturate(160%)}
+.content{max-width:1440px}
+.stat-card,.panel,.quick-card{border-color:#E7EAED;box-shadow:0 8px 28px #1d304308}
+.primary-button,.auth-submit,.auth-form button[type=submit]{background:linear-gradient(135deg,#FFFFFFD9,#E8EDF2B8);color:#1C3552;border:1px solid #FFFFFFE8;box-shadow:inset 0 1px 0 #FFFFFF,0 5px 16px #263b5317,0 1px 3px #263b5310;backdrop-filter:blur(16px) saturate(175%);-webkit-backdrop-filter:blur(16px) saturate(175%);transition:transform .2s ease,box-shadow .2s ease,background .2s ease}
+.primary-button:hover,.auth-submit:hover{background:linear-gradient(135deg,#FFFFFFF2,#E3EAF1E8);color:#142B49;transform:translateY(-2px);box-shadow:inset 0 1px 0 #FFFFFF,0 9px 22px #263b5324}
+.primary-button:disabled{opacity:.55;cursor:not-allowed;transform:none}
+.nav-item,.icon-button,.round-arrow,.quick-card,.signout-button,.text-button,.panel-link{transition:all .2s ease}
+.signout-button{background:#FFFFFFB8;backdrop-filter:blur(12px);border-color:#E3E8ED}
+.quick-card:hover,.round-arrow:hover{background:#F9FBFC;border-color:#CCD6E0;box-shadow:0 8px 20px #24374b10}
+.auth-page{background:radial-gradient(circle at 82% 14%,#E8EDF2 0,transparent 34%),#F5F6F7}
+.auth-card{border-color:#E6EAED;box-shadow:0 20px 60px #142b490D}
+.auth-submit{width:100%}
+.courses-layout{display:grid;grid-template-columns:minmax(280px,.82fr) minmax(0,1.18fr);gap:18px;align-items:start}
+.course-form{display:grid;gap:9px;margin-top:22px}
+.course-form label{font-size:11px;font-weight:600;color:#40546A;margin-top:6px}
+.course-form label span{font-weight:400;color:#8B96A2}
+.course-form input:not([type=color]),.course-form textarea{width:100%;border:1px solid #E2E7EB;border-radius:10px;padding:12px 13px;font:inherit;font-size:12px;color:var(--ink);background:#FBFCFD;outline:none;resize:vertical}
+.course-form input:focus,.course-form textarea:focus{border-color:#91A4B7;box-shadow:0 0 0 3px #DCE5EE80}
+.color-control{display:flex;align-items:center;gap:10px;color:#788594;font-size:11px}
+.color-control input{width:38px;height:34px;padding:3px;border:1px solid #E2E7EB;border-radius:8px;background:#fff}
+.course-form .primary-button{justify-content:center;margin-top:12px;min-height:43px}
+.course-count{display:grid;place-items:center;width:38px;height:38px;border-radius:12px;background:#EDF1F5;color:#34516F;font:700 15px Manrope}
+.course-empty{min-height:230px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;color:#8994A0;font-size:11px;padding:25px}
+.course-empty strong{font-size:13px;color:#33485F}
+.course-empty>span:last-child{max-width:250px;line-height:1.6}
+.empty-icon{width:48px;height:48px;border-radius:15px;background:#EDF1F5;color:#34516F;display:grid;place-items:center}
+.course-list{margin-top:15px}
+.course-item{display:flex;align-items:center;gap:13px;padding:15px 2px;border-top:1px solid #EDF0F2}
+.course-swatch{width:5px;height:38px;border-radius:5px;flex-shrink:0}
+.course-item-copy{flex:1;min-width:0}
+.course-item-copy strong,.course-item-copy small{display:block;overflow:hidden;text-overflow:ellipsis}
+.course-item-copy strong{font-size:12px;color:#263B52}
+.course-item-copy small{font-size:10px;color:#8994A0;margin-top:4px}
+.delete-course{width:32px;height:32px;border:1px solid #E7EAED;border-radius:10px;background:#FFFFFFB8;color:#7E8B99;display:grid;place-items:center}
+.delete-course:hover{background:#FFF1EF;color:#A94F47;border-color:#F1D8D4}
+.course-error{margin-top:12px;padding:10px 12px;border-radius:9px;background:#FFF1EF;color:#A94F47;font-size:11px;line-height:1.5}
+@media(max-width:850px){.courses-layout{grid-template-columns:1fr}}
+@media(max-width:720px){.sidebar{background:#fff}.brand{border-bottom-color:#E8EBEE}.workspace-label{color:#8994A0}.nav-item{color:#657386}.nav-item.active{background:#EDF1F5;color:var(--navy)}.courses-layout{gap:13px}.course-empty{min-height:180px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
