@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState, type FormEvent } from "react";
-import { CalendarDays, Check, ClipboardList, Pencil, Plus, RotateCcw, Trash2, X } from "lucide-react";
+import { CalendarDays, Check, CheckSquare, ClipboardList, Pencil, Plus, Trash2, X } from "lucide-react";
 import { getSupabaseClient } from "../lib/supabase";
 
 type Course = { id: string; name: string; color: string | null };
