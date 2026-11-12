@@ -12,9 +12,9 @@ import SettingsWorkspace from "./settings-workspace";
 import BlackboardWorkspace from "./blackboard-workspace";
 import DashboardWorkspace from "./dashboard-workspace";
 import {
-  Bell, CalendarDays, CheckSquare, ChevronRight, ClipboardList,
+  CalendarDays, CheckSquare, ChevronRight, ClipboardList,
   FileText, GraduationCap, LayoutDashboard, Menu, NotebookPen,
-  Plus, Search, Settings, Sparkles, Target, X, FolderOpen
+  Plus, Settings, ShieldCheck, Sparkles, Target, X, FolderOpen
 } from "lucide-react";
 
 const navigation = [
@@ -71,8 +71,7 @@ export default function Home() {
           <button className="icon-button mobile-menu" onClick={() => setMenuOpen(true)} aria-label="Abrir menú"><Menu size={21}/></button>
           <div className="breadcrumb">Espacio personal <ChevronRight size={14}/> <strong>{active}</strong></div>
           <div className="top-actions">
-            <button className="search-button"><Search size={17}/><span>Buscar en AURENZA</span><kbd>⌘ K</kbd></button>
-            <button className="icon-button" aria-label="Notificaciones"><Bell size={19}/><i/></button>
+            <div className="privacy-indicator" aria-label="Espacio privado"><ShieldCheck size={16}/><span>Espacio privado</span></div>
             <button className="signout-button" onClick={() => void signOut()}>Cerrar sesión</button><div className="avatar avatar-top">{email?.charAt(0).toUpperCase() ?? "A"}</div>
           </div>
         </header>
